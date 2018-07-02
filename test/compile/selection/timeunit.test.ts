@@ -102,6 +102,9 @@ describe('Selection time unit', function() {
     let tuIdx = -1;
     let selIdx = -1;
 
+    require("util").inspect.defaultOptions.depth = null;
+    console.log(getData(model));
+
     data2.forEach((tx, idx) => {
       if (tx.type === 'formula' && tx.as === 'seconds_date') {
         tuIdx = idx;
