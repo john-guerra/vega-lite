@@ -4,6 +4,7 @@ import {AggregateNode} from './aggregate';
 import {DataFlowNode, OutputNode} from './dataflow';
 import {FacetNode} from './facet';
 import {FilterInvalidNode} from './filterinvalid';
+import {ParseNode} from './formatparse';
 import {DataComponent} from './index';
 import * as optimizers from './optimizers';
 import {SourceNode} from './source';
@@ -115,6 +116,16 @@ function getLeaves(roots: DataFlowNode[]) {
   return leaves;
 }
 
+export function mergeParse(node: DataFlowNode) {
+  const parseChildren = node.children.filter((x): x is ParseNode => x instanceof ParseNode);
+  if (parseChildren.length > 1) {
+    const mergedParse = parseChildren.shift();
+    parseChildren.forEach((x) => (x.parent = mergedParse));
+    parseChildren.forEach((x) => (mergedParse.merge(x)));
+  } else {
+    node.children.forEach(mergeParse);
+  }
+}
 /**
  * Optimizes the dataflow of the passed in data component.
  */
@@ -129,8 +140,9 @@ export function optimizeDataflow(dataComponent: DataComponent) {
   roots = roots.filter(r => r.numChildren() > 0);
 
   getLeaves(roots).forEach(optimizers.iterateFromLeaves(optimizers.moveParseUp));
-  getLeaves(roots).forEach(optimizers.removeDuplicateTimeUnits);
 
+  getLeaves(roots).forEach(optimizers.removeDuplicateTimeUnits);
+  roots.forEach(mergeParse);
   roots.forEach(moveFacetDown);
 
   keys(dataComponent.sources).forEach(s => {
