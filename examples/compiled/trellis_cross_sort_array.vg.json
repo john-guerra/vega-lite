@@ -121,22 +121,12 @@
                 },
                 {
                     "type": "formula",
-                    "expr": "datum[\"a\"]===\"B\" ? 0 : datum[\"a\"]===\"C\" ? 1 : datum[\"a\"]===\"A\" ? 2 : 3",
+                    "expr": "datum.a === 'B' ? 0 : datum.a === 'C' ? 1 : datum.a === 'A' ? 2 : 3",
                     "as": "column_a_sort_index"
                 },
                 {
                     "type": "formula",
-                    "expr": "datum[\"b\"]===\"Y\" ? 0 : datum[\"b\"]===\"X\" ? 1 : datum[\"b\"]===\"Z\" ? 2 : 3",
-                    "as": "row_b_sort_index"
-                },
-                {
-                    "type": "formula",
-                    "expr": "datum[\"a\"]===\"B\" ? 0 : datum[\"a\"]===\"C\" ? 1 : datum[\"a\"]===\"A\" ? 2 : 3",
-                    "as": "column_a_sort_index"
-                },
-                {
-                    "type": "formula",
-                    "expr": "datum[\"b\"]===\"Y\" ? 0 : datum[\"b\"]===\"X\" ? 1 : datum[\"b\"]===\"Z\" ? 2 : 3",
+                    "expr": "datum.b === 'Y' ? 0 : datum.b === 'X' ? 1 : datum.b === 'Z' ? 2 : 3",
                     "as": "row_b_sort_index"
                 }
             ]
@@ -149,15 +139,6 @@
                     "type": "aggregate",
                     "groupby": [
                         "a"
-                    ],
-                    "fields": [
-                        "column_a_sort_index"
-                    ],
-                    "ops": [
-                        "max"
-                    ],
-                    "as": [
-                        "column_a_sort_index"
                     ]
                 }
             ]
@@ -170,15 +151,6 @@
                     "type": "aggregate",
                     "groupby": [
                         "b"
-                    ],
-                    "fields": [
-                        "row_b_sort_index"
-                    ],
-                    "ops": [
-                        "max"
-                    ],
-                    "as": [
-                        "row_b_sort_index"
                     ]
                 }
             ]
@@ -263,10 +235,7 @@
             "row": 10,
             "column": 10
         },
-        "offset": {
-            "rowTitle": 10,
-            "columnTitle": 10
-        },
+        "offset": 10,
         "columns": {
             "signal": "length(data('column_domain'))"
         },
@@ -275,25 +244,51 @@
     },
     "marks": [
         {
-            "name": "row-title",
-            "type": "group",
+            "name": "row_title",
             "role": "row-title",
-            "title": {
-                "text": "b",
-                "offset": 10,
-                "orient": "left",
-                "style": "guide-title"
-            }
+            "type": "group",
+            "marks": [
+                {
+                    "type": "text",
+                    "role": "row-title-text",
+                    "style": "guide-title",
+                    "encode": {
+                        "update": {
+                            "align": {
+                                "value": "center"
+                            },
+                            "text": {
+                                "value": "b"
+                            },
+                            "angle": {
+                                "value": 270
+                            }
+                        }
+                    }
+                }
+            ]
         },
         {
-            "name": "column-title",
-            "type": "group",
+            "name": "column_title",
             "role": "column-title",
-            "title": {
-                "text": "a",
-                "offset": 10,
-                "style": "guide-title"
-            }
+            "type": "group",
+            "marks": [
+                {
+                    "type": "text",
+                    "role": "column-title-text",
+                    "style": "guide-title",
+                    "encode": {
+                        "update": {
+                            "align": {
+                                "value": "center"
+                            },
+                            "text": {
+                                "value": "a"
+                            }
+                        }
+                    }
+                }
+            ]
         },
         {
             "name": "row_header",
@@ -303,8 +298,12 @@
                 "data": "row_domain"
             },
             "sort": {
-                "field": "datum[\"row_b_sort_index\"]",
-                "order": "ascending"
+                "field": "datum[\"b\"]",
+                "order": [
+                    "Y",
+                    "X",
+                    "Z"
+                ]
             },
             "title": {
                 "text": {
@@ -343,8 +342,12 @@
                 "data": "column_domain"
             },
             "sort": {
-                "field": "datum[\"column_a_sort_index\"]",
-                "order": "ascending"
+                "field": "datum[\"a\"]",
+                "order": [
+                    "B",
+                    "C",
+                    "A"
+                ]
             },
             "title": {
                 "text": {
@@ -370,8 +373,12 @@
                 "data": "column_domain"
             },
             "sort": {
-                "field": "datum[\"column_a_sort_index\"]",
-                "order": "ascending"
+                "field": "datum[\"a\"]",
+                "order": [
+                    "B",
+                    "C",
+                    "A"
+                ]
             },
             "encode": {
                 "update": {
@@ -408,30 +415,26 @@
                         "a"
                     ],
                     "aggregate": {
-                        "cross": true,
-                        "fields": [
-                            "row_b_sort_index",
-                            "column_a_sort_index"
-                        ],
-                        "ops": [
-                            "max",
-                            "max"
-                        ],
-                        "as": [
-                            "row_b_sort_index",
-                            "column_a_sort_index"
-                        ]
+                        "cross": true
                     }
                 }
             },
             "sort": {
                 "field": [
-                    "datum[\"row_b_sort_index\"]",
-                    "datum[\"column_a_sort_index\"]"
+                    "datum[\"b\"]",
+                    "datum[\"a\"]"
                 ],
                 "order": [
-                    "ascending",
-                    "ascending"
+                    [
+                        "Y",
+                        "X",
+                        "Z"
+                    ],
+                    [
+                        "B",
+                        "C",
+                        "A"
+                    ]
                 ]
             },
             "data": [

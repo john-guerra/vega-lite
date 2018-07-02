@@ -118,58 +118,6 @@
                         null,
                         null
                     ]
-                },
-                {
-                    "type": "window",
-                    "params": [
-                        null
-                    ],
-                    "as": [
-                        "median_y_by_b"
-                    ],
-                    "ops": [
-                        "median"
-                    ],
-                    "fields": [
-                        "y"
-                    ],
-                    "sort": {
-                        "field": [],
-                        "order": []
-                    },
-                    "groupby": [
-                        "b"
-                    ],
-                    "frame": [
-                        null,
-                        null
-                    ]
-                },
-                {
-                    "type": "window",
-                    "params": [
-                        null
-                    ],
-                    "as": [
-                        "median_x_by_a"
-                    ],
-                    "ops": [
-                        "median"
-                    ],
-                    "fields": [
-                        "x"
-                    ],
-                    "sort": {
-                        "field": [],
-                        "order": []
-                    },
-                    "groupby": [
-                        "a"
-                    ],
-                    "frame": [
-                        null,
-                        null
-                    ]
                 }
             ]
         },
@@ -181,15 +129,6 @@
                     "type": "aggregate",
                     "groupby": [
                         "a"
-                    ],
-                    "fields": [
-                        "x"
-                    ],
-                    "ops": [
-                        "median"
-                    ],
-                    "as": [
-                        "median_x"
                     ]
                 }
             ]
@@ -202,15 +141,6 @@
                     "type": "aggregate",
                     "groupby": [
                         "b"
-                    ],
-                    "fields": [
-                        "y"
-                    ],
-                    "ops": [
-                        "median"
-                    ],
-                    "as": [
-                        "median_y"
                     ]
                 }
             ]
@@ -295,10 +225,7 @@
             "row": 10,
             "column": 10
         },
-        "offset": {
-            "rowTitle": 10,
-            "columnTitle": 10
-        },
+        "offset": 10,
         "columns": {
             "signal": "length(data('column_domain'))"
         },
@@ -307,25 +234,51 @@
     },
     "marks": [
         {
-            "name": "row-title",
-            "type": "group",
+            "name": "row_title",
             "role": "row-title",
-            "title": {
-                "text": "b",
-                "offset": 10,
-                "orient": "left",
-                "style": "guide-title"
-            }
+            "type": "group",
+            "marks": [
+                {
+                    "type": "text",
+                    "role": "row-title-text",
+                    "style": "guide-title",
+                    "encode": {
+                        "update": {
+                            "align": {
+                                "value": "center"
+                            },
+                            "text": {
+                                "value": "b"
+                            },
+                            "angle": {
+                                "value": 270
+                            }
+                        }
+                    }
+                }
+            ]
         },
         {
-            "name": "column-title",
-            "type": "group",
+            "name": "column_title",
             "role": "column-title",
-            "title": {
-                "text": "a",
-                "offset": 10,
-                "style": "guide-title"
-            }
+            "type": "group",
+            "marks": [
+                {
+                    "type": "text",
+                    "role": "column-title-text",
+                    "style": "guide-title",
+                    "encode": {
+                        "update": {
+                            "align": {
+                                "value": "center"
+                            },
+                            "text": {
+                                "value": "a"
+                            }
+                        }
+                    }
+                }
+            ]
         },
         {
             "name": "row_header",
@@ -335,8 +288,11 @@
                 "data": "row_domain"
             },
             "sort": {
-                "field": "datum[\"median_y\"]",
-                "order": "ascending"
+                "field": "datum[\"b\"]",
+                "order": {
+                    "op": "median",
+                    "field": "y"
+                }
             },
             "title": {
                 "text": {
@@ -375,8 +331,11 @@
                 "data": "column_domain"
             },
             "sort": {
-                "field": "datum[\"median_x\"]",
-                "order": "ascending"
+                "field": "datum[\"a\"]",
+                "order": {
+                    "op": "median",
+                    "field": "x"
+                }
             },
             "title": {
                 "text": {
@@ -402,8 +361,11 @@
                 "data": "column_domain"
             },
             "sort": {
-                "field": "datum[\"median_x\"]",
-                "order": "ascending"
+                "field": "datum[\"a\"]",
+                "order": {
+                    "op": "median",
+                    "field": "x"
+                }
             },
             "encode": {
                 "update": {
@@ -440,30 +402,24 @@
                         "a"
                     ],
                     "aggregate": {
-                        "cross": true,
-                        "fields": [
-                            "median_y_by_b",
-                            "median_x_by_a"
-                        ],
-                        "ops": [
-                            "max",
-                            "max"
-                        ],
-                        "as": [
-                            "median_y_by_b",
-                            "median_x_by_a"
-                        ]
+                        "cross": true
                     }
                 }
             },
             "sort": {
                 "field": [
-                    "datum[\"median_y_by_b\"]",
-                    "datum[\"median_x_by_a\"]"
+                    "datum[\"b\"]",
+                    "datum[\"a\"]"
                 ],
                 "order": [
-                    "ascending",
-                    "ascending"
+                    {
+                        "op": "median",
+                        "field": "y"
+                    },
+                    {
+                        "op": "median",
+                        "field": "x"
+                    }
                 ]
             },
             "data": [

@@ -206,9 +206,13 @@
         }
     ],
     "layout": {
-        "padding": 15,
+        "padding": {
+            "row": 10,
+            "column": 10
+        },
+        "offset": 10,
         "columns": 1,
-        "bounds": "flush",
+        "bounds": "full",
         "align": "each"
     },
     "marks": [
@@ -294,8 +298,12 @@
             "type": "group",
             "name": "concat_1_group",
             "layout": {
-                "padding": 15,
-                "bounds": "flush",
+                "padding": {
+                    "row": 10,
+                    "column": 10
+                },
+                "offset": 10,
+                "bounds": "full",
                 "align": "each"
             },
             "marks": [

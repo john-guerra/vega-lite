@@ -111,10 +111,7 @@
             "row": 10,
             "column": 10
         },
-        "offset": {
-            "rowTitle": 10,
-            "columnTitle": 10
-        },
+        "offset": 10,
         "columns": {
             "signal": "length(data('column_domain'))"
         },
@@ -123,25 +120,51 @@
     },
     "marks": [
         {
-            "name": "row-title",
-            "type": "group",
+            "name": "row_title",
             "role": "row-title",
-            "title": {
-                "text": "r",
-                "offset": 10,
-                "orient": "left",
-                "style": "guide-title"
-            }
+            "type": "group",
+            "marks": [
+                {
+                    "type": "text",
+                    "role": "row-title-text",
+                    "style": "guide-title",
+                    "encode": {
+                        "update": {
+                            "align": {
+                                "value": "center"
+                            },
+                            "text": {
+                                "value": "r"
+                            },
+                            "angle": {
+                                "value": 270
+                            }
+                        }
+                    }
+                }
+            ]
         },
         {
-            "name": "column-title",
-            "type": "group",
+            "name": "column_title",
             "role": "column-title",
-            "title": {
-                "text": "c",
-                "offset": 10,
-                "style": "guide-title"
-            }
+            "type": "group",
+            "marks": [
+                {
+                    "type": "text",
+                    "role": "column-title-text",
+                    "style": "guide-title",
+                    "encode": {
+                        "update": {
+                            "align": {
+                                "value": "center"
+                            },
+                            "text": {
+                                "value": "c"
+                            }
+                        }
+                    }
+                }
+            ]
         },
         {
             "name": "row_header",
@@ -218,10 +241,6 @@
                         "ops": [
                             "distinct",
                             "distinct"
-                        ],
-                        "as": [
-                            "distinct_a",
-                            "distinct_b"
                         ]
                     }
                 }

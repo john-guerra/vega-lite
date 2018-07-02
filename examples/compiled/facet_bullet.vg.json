@@ -207,6 +207,7 @@
             "row": 10,
             "column": 10
         },
+        "offset": 10,
         "columns": 1,
         "bounds": "full",
         "align": "all"
@@ -232,6 +233,9 @@
                 "style": "guide-label",
                 "encode": {
                     "update": {
+                        "angle": {
+                            "value": 0
+                        },
                         "align": {
                             "value": "right"
                         }

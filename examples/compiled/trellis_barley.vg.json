@@ -22,15 +22,6 @@
                     "type": "aggregate",
                     "groupby": [
                         "site"
-                    ],
-                    "fields": [
-                        "yield"
-                    ],
-                    "ops": [
-                        "median"
-                    ],
-                    "as": [
-                        "median_yield"
                     ]
                 }
             ]
@@ -78,24 +69,36 @@
             "row": 10,
             "column": 10
         },
-        "offset": {
-            "rowTitle": 10
-        },
+        "offset": 10,
         "columns": 1,
         "bounds": "full",
         "align": "all"
     },
     "marks": [
         {
-            "name": "row-title",
-            "type": "group",
+            "name": "trellis_barley_row_title",
             "role": "row-title",
-            "title": {
-                "text": "site",
-                "offset": 10,
-                "orient": "left",
-                "style": "guide-title"
-            }
+            "type": "group",
+            "marks": [
+                {
+                    "type": "text",
+                    "role": "row-title-text",
+                    "style": "guide-title",
+                    "encode": {
+                        "update": {
+                            "align": {
+                                "value": "center"
+                            },
+                            "text": {
+                                "value": "site"
+                            },
+                            "angle": {
+                                "value": 270
+                            }
+                        }
+                    }
+                }
+            ]
         },
         {
             "name": "trellis_barley_row_header",
@@ -105,8 +108,11 @@
                 "data": "trellis_barley_row_domain"
             },
             "sort": {
-                "field": "datum[\"median_yield\"]",
-                "order": "ascending"
+                "field": "datum[\"site\"]",
+                "order": {
+                    "op": "median",
+                    "field": "yield"
+                }
             },
             "title": {
                 "text": {
@@ -170,26 +176,18 @@
                     "data": "source_0",
                     "groupby": [
                         "site"
-                    ],
-                    "aggregate": {
-                        "fields": [
-                            "yield"
-                        ],
-                        "ops": [
-                            "median"
-                        ],
-                        "as": [
-                            "median_yield_by_site"
-                        ]
-                    }
+                    ]
                 }
             },
             "sort": {
                 "field": [
-                    "datum[\"median_yield_by_site\"]"
+                    "datum[\"site\"]"
                 ],
                 "order": [
-                    "ascending"
+                    {
+                        "op": "median",
+                        "field": "yield"
+                    }
                 ]
             },
             "data": [

@@ -55,9 +55,7 @@
         "headerBand": {
             "column": 0.5
         },
-        "offset": {
-            "columnTitle": 10
-        },
+        "offset": 10,
         "columns": {
             "signal": "length(data('column_domain'))"
         },
@@ -66,14 +64,26 @@
     },
     "marks": [
         {
-            "name": "column-title",
-            "type": "group",
+            "name": "column_title",
             "role": "column-title",
-            "title": {
-                "text": "Origin / Cylinders",
-                "offset": 10,
-                "style": "guide-title"
-            }
+            "type": "group",
+            "marks": [
+                {
+                    "type": "text",
+                    "role": "column-title-text",
+                    "style": "guide-title",
+                    "encode": {
+                        "update": {
+                            "align": {
+                                "value": "center"
+                            },
+                            "text": {
+                                "value": "Origin / Cylinders"
+                            }
+                        }
+                    }
+                }
+            ]
         },
         {
             "name": "column_header",
@@ -111,9 +121,6 @@
                         ],
                         "ops": [
                             "distinct"
-                        ],
-                        "as": [
-                            "distinct_Cylinders"
                         ]
                     }
                 }
@@ -152,6 +159,7 @@
                     "row": 10,
                     "column": 10
                 },
+                "offset": 10,
                 "bounds": "full",
                 "align": "all"
             },

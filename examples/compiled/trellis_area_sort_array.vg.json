@@ -21,12 +21,7 @@
                 },
                 {
                     "type": "formula",
-                    "expr": "datum[\"symbol\"]===\"MSFT\" ? 0 : datum[\"symbol\"]===\"AAPL\" ? 1 : datum[\"symbol\"]===\"IBM\" ? 2 : datum[\"symbol\"]===\"AMZN\" ? 3 : 4",
-                    "as": "row_symbol_sort_index"
-                },
-                {
-                    "type": "formula",
-                    "expr": "datum[\"symbol\"]===\"MSFT\" ? 0 : datum[\"symbol\"]===\"AAPL\" ? 1 : datum[\"symbol\"]===\"IBM\" ? 2 : datum[\"symbol\"]===\"AMZN\" ? 3 : 4",
+                    "expr": "datum.symbol === 'MSFT' ? 0 : datum.symbol === 'AAPL' ? 1 : datum.symbol === 'IBM' ? 2 : datum.symbol === 'AMZN' ? 3 : 4",
                     "as": "row_symbol_sort_index"
                 },
                 {
@@ -70,15 +65,6 @@
                     "type": "aggregate",
                     "groupby": [
                         "symbol"
-                    ],
-                    "fields": [
-                        "row_symbol_sort_index"
-                    ],
-                    "ops": [
-                        "max"
-                    ],
-                    "as": [
-                        "row_symbol_sort_index"
                     ]
                 }
             ]
@@ -99,24 +85,36 @@
             "row": 10,
             "column": 10
         },
-        "offset": {
-            "rowTitle": 10
-        },
+        "offset": 10,
         "columns": 1,
         "bounds": "full",
         "align": "all"
     },
     "marks": [
         {
-            "name": "row-title",
-            "type": "group",
+            "name": "row_title",
             "role": "row-title",
-            "title": {
-                "text": "Symbol",
-                "offset": 10,
-                "orient": "left",
-                "style": "guide-title"
-            }
+            "type": "group",
+            "marks": [
+                {
+                    "type": "text",
+                    "role": "row-title-text",
+                    "style": "guide-title",
+                    "encode": {
+                        "update": {
+                            "align": {
+                                "value": "center"
+                            },
+                            "text": {
+                                "value": "Symbol"
+                            },
+                            "angle": {
+                                "value": 270
+                            }
+                        }
+                    }
+                }
+            ]
         },
         {
             "name": "row_header",
@@ -126,8 +124,13 @@
                 "data": "row_domain"
             },
             "sort": {
-                "field": "datum[\"row_symbol_sort_index\"]",
-                "order": "ascending"
+                "field": "datum[\"symbol\"]",
+                "order": [
+                    "MSFT",
+                    "AAPL",
+                    "IBM",
+                    "AMZN"
+                ]
             },
             "title": {
                 "text": {
@@ -203,26 +206,20 @@
                     "data": "source_0",
                     "groupby": [
                         "symbol"
-                    ],
-                    "aggregate": {
-                        "fields": [
-                            "row_symbol_sort_index"
-                        ],
-                        "ops": [
-                            "max"
-                        ],
-                        "as": [
-                            "row_symbol_sort_index"
-                        ]
-                    }
+                    ]
                 }
             },
             "sort": {
                 "field": [
-                    "datum[\"row_symbol_sort_index\"]"
+                    "datum[\"symbol\"]"
                 ],
                 "order": [
-                    "ascending"
+                    [
+                        "MSFT",
+                        "AAPL",
+                        "IBM",
+                        "AMZN"
+                    ]
                 ]
             },
             "encode": {

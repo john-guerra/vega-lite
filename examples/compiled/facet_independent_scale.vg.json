@@ -76,9 +76,6 @@
                     ],
                     "ops": [
                         "distinct"
-                    ],
-                    "as": [
-                        "distinct_age"
                     ]
                 }
             ]
@@ -99,9 +96,7 @@
             "row": 10,
             "column": 10
         },
-        "offset": {
-            "columnTitle": 10
-        },
+        "offset": 10,
         "columns": {
             "signal": "length(data('column_domain'))"
         },
@@ -110,14 +105,26 @@
     },
     "marks": [
         {
-            "name": "column-title",
-            "type": "group",
+            "name": "column_title",
             "role": "column-title",
-            "title": {
-                "text": "gender",
-                "offset": 10,
-                "style": "guide-title"
-            }
+            "type": "group",
+            "marks": [
+                {
+                    "type": "text",
+                    "role": "column-title-text",
+                    "style": "guide-title",
+                    "encode": {
+                        "update": {
+                            "align": {
+                                "value": "center"
+                            },
+                            "text": {
+                                "value": "gender"
+                            }
+                        }
+                    }
+                }
+            ]
         },
         {
             "name": "row_header",
@@ -188,9 +195,6 @@
                         ],
                         "ops": [
                             "distinct"
-                        ],
-                        "as": [
-                            "distinct_age"
                         ]
                     }
                 }
