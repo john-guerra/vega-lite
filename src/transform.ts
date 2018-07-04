@@ -238,8 +238,8 @@ export interface ImputeTransform extends ImputeParams {
    */
   key: string;
   /**
-   * An optional array of key values that should be considered for imputation.
-   * If provided, this array will be used in addition to the key values observed within the input data.
+   * An optional array or `ImputeSequence` of key values that should be considered for imputation.
+   * If provided, this will be used in addition to the key values observed within the input data.
    */
   keyvals?: any[] | ImputeSequence;
 

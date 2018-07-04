@@ -15,7 +15,9 @@ export interface ImputeParams {
   value?: any;
 
   /**
-   * The frame over which the `method` will be applied.
+   * A frame specification as a two-element array indicating how the sliding window should proceed. The array entries should either be a number indicating the offset from the current data object, or null to indicate unbounded rows preceding or following the current data object. The default value is `[null, null]`, indicating that the sliding window includes all objects. The value `[-5, 5]` indicates that the window should include five objects preceding and five objects following the current object. Finally, `[null, null]` indicates that the frame should always include all data objects.
+   *
+   * __Default value:__:  `[null, null]` (includes all objects)
    */
   frame?: (null | number)[];
 }
