@@ -1,275 +1,163 @@
 {
-    "$schema": "https://vega.github.io/schema/vega/v3.json",
-    "autosize": "pad",
-    "padding": 5,
-    "width": 200,
-    "height": 200,
-    "style": "cell",
-    "data": [
+  "$schema": "https://vega.github.io/schema/vega/v3.json",
+  "autosize": "pad",
+  "padding": 5,
+  "width": 200,
+  "height": 200,
+  "style": "cell",
+  "data": [
+    {
+      "name": "source_0",
+      "values": [
+        {"x": 0, "y": 28, "c": 0},
+        {"x": 0, "y": 91, "c": 1},
+        {"x": 1, "y": 43, "c": 0},
+        {"x": 1, "y": 55, "c": 1},
+        {"x": 2, "y": 81, "c": 0},
+        {"x": 2, "y": 53, "c": 1},
+        {"x": 3, "y": 19, "c": 0}
+      ]
+    },
+    {
+      "name": "data_0",
+      "source": "source_0",
+      "transform": [
+        {"type": "formula", "expr": "toNumber(datum[\"x\"])", "as": "x"},
+        {"type": "formula", "expr": "toNumber(datum[\"y\"])", "as": "y"},
         {
-            "name": "source_0",
-            "values": [
-                {
-                    "x": 0,
-                    "y": 28,
-                    "c": 0
-                },
-                {
-                    "x": 0,
-                    "y": 91,
-                    "c": 1
-                },
-                {
-                    "x": 1,
-                    "y": 43,
-                    "c": 0
-                },
-                {
-                    "x": 1,
-                    "y": 55,
-                    "c": 1
-                },
-                {
-                    "x": 2,
-                    "y": 81,
-                    "c": 0
-                },
-                {
-                    "x": 2,
-                    "y": 53,
-                    "c": 1
-                },
-                {
-                    "x": 3,
-                    "y": 19,
-                    "c": 0
-                }
-            ]
+          "type": "impute",
+          "field": "y",
+          "key": "x",
+          "method": "value",
+          "groupby": ["c"],
+          "value": null
         },
         {
-            "name": "data_0",
-            "source": "source_0",
-            "transform": [
-                {
-                    "type": "formula",
-                    "expr": "toNumber(datum[\"x\"])",
-                    "as": "x"
-                },
-                {
-                    "type": "formula",
-                    "expr": "toNumber(datum[\"y\"])",
-                    "as": "y"
-                },
-                {
-                    "type": "impute",
-                    "field": "y",
-                    "key": "x",
-                    "method": "value",
-                    "groupby": [
-                        "c"
-                    ],
-                    "value": null
-                },
-                {
-                    "type": "window",
-                    "as": [
-                        "imputed_y_value"
-                    ],
-                    "ops": [
-                        "mean"
-                    ],
-                    "fields": [
-                        "y"
-                    ],
-                    "frame": [
-                        -2,
-                        2
-                    ],
-                    "ignorePeers": false,
-                    "groupby": [
-                        "c"
-                    ]
-                },
-                {
-                    "type": "formula",
-                    "expr": "datum.y === null ? datum.imputed_y_value : datum.y",
-                    "as": "y"
-                }
-            ]
-        }
-    ],
-    "marks": [
-        {
-            "name": "pathgroup",
-            "type": "group",
-            "from": {
-                "facet": {
-                    "name": "faceted_path_main",
-                    "data": "data_0",
-                    "groupby": [
-                        "c"
-                    ]
-                }
-            },
-            "encode": {
-                "update": {
-                    "width": {
-                        "field": {
-                            "group": "width"
-                        }
-                    },
-                    "height": {
-                        "field": {
-                            "group": "height"
-                        }
-                    }
-                }
-            },
-            "marks": [
-                {
-                    "name": "marks",
-                    "type": "line",
-                    "style": [
-                        "line"
-                    ],
-                    "sort": {
-                        "field": "datum[\"x\"]",
-                        "order": "descending"
-                    },
-                    "from": {
-                        "data": "faceted_path_main"
-                    },
-                    "encode": {
-                        "update": {
-                            "stroke": {
-                                "scale": "color",
-                                "field": "c"
-                            },
-                            "x": {
-                                "scale": "x",
-                                "field": "x"
-                            },
-                            "y": {
-                                "scale": "y",
-                                "field": "y"
-                            },
-                            "defined": {
-                                "signal": "datum[\"x\"] !== null && !isNaN(datum[\"x\"]) && datum[\"y\"] !== null && !isNaN(datum[\"y\"])"
-                            }
-                        }
-                    }
-                }
-            ]
-        }
-    ],
-    "scales": [
-        {
-            "name": "x",
-            "type": "linear",
-            "domain": {
-                "data": "data_0",
-                "field": "x"
-            },
-            "range": [
-                0,
-                {
-                    "signal": "width"
-                }
-            ],
-            "nice": 1,
-            "zero": false
+          "type": "window",
+          "as": ["imputed_y_value"],
+          "ops": ["mean"],
+          "fields": ["y"],
+          "frame": [-2, 2],
+          "ignorePeers": false,
+          "groupby": ["c"]
         },
         {
-            "name": "y",
-            "type": "linear",
-            "domain": {
-                "data": "data_0",
-                "field": "y"
-            },
-            "range": [
-                {
-                    "signal": "height"
-                },
-                0
-            ],
-            "nice": true,
-            "zero": true
-        },
-        {
-            "name": "color",
-            "type": "ordinal",
-            "domain": {
-                "data": "data_0",
-                "field": "c",
-                "sort": true
-            },
-            "range": "category"
+          "type": "formula",
+          "expr": "datum.y === null ? datum.imputed_y_value : datum.y",
+          "as": "y"
         }
-    ],
-    "axes": [
-        {
-            "scale": "x",
-            "orient": "bottom",
-            "grid": false,
-            "title": "x",
-            "labelFlush": true,
-            "labelOverlap": true,
-            "tickCount": {
-                "signal": "ceil(width/40)"
-            },
-            "zindex": 1
-        },
-        {
-            "scale": "x",
-            "orient": "bottom",
-            "grid": true,
-            "tickCount": {
-                "signal": "ceil(width/40)"
-            },
-            "gridScale": "y",
-            "domain": false,
-            "labels": false,
-            "maxExtent": 0,
-            "minExtent": 0,
-            "ticks": false,
-            "zindex": 0
-        },
-        {
-            "scale": "y",
-            "orient": "left",
-            "grid": false,
-            "title": "y",
-            "labelOverlap": true,
-            "tickCount": {
-                "signal": "ceil(height/40)"
-            },
-            "zindex": 1
-        },
-        {
-            "scale": "y",
-            "orient": "left",
-            "grid": true,
-            "tickCount": {
-                "signal": "ceil(height/40)"
-            },
-            "gridScale": "x",
-            "domain": false,
-            "labels": false,
-            "maxExtent": 0,
-            "minExtent": 0,
-            "ticks": false,
-            "zindex": 0
-        }
-    ],
-    "legends": [
-        {
-            "stroke": "color",
-            "title": "c"
-        }
-    ],
-    "config": {
-        "axisY": {
-            "minExtent": 30
-        }
+      ]
     }
+  ],
+  "marks": [
+    {
+      "name": "pathgroup",
+      "type": "group",
+      "from": {
+        "facet": {
+          "name": "faceted_path_main",
+          "data": "data_0",
+          "groupby": ["c"]
+        }
+      },
+      "encode": {
+        "update": {
+          "width": {"field": {"group": "width"}},
+          "height": {"field": {"group": "height"}}
+        }
+      },
+      "marks": [
+        {
+          "name": "marks",
+          "type": "line",
+          "style": ["line"],
+          "sort": {"field": "datum[\"x\"]", "order": "descending"},
+          "from": {"data": "faceted_path_main"},
+          "encode": {
+            "update": {
+              "stroke": {"scale": "color", "field": "c"},
+              "x": {"scale": "x", "field": "x"},
+              "y": {"scale": "y", "field": "y"},
+              "defined": {
+                "signal": "datum[\"x\"] !== null && !isNaN(datum[\"x\"]) && datum[\"y\"] !== null && !isNaN(datum[\"y\"])"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "linear",
+      "domain": {"data": "data_0", "field": "x"},
+      "range": [0, {"signal": "width"}],
+      "nice": 1,
+      "zero": false
+    },
+    {
+      "name": "y",
+      "type": "linear",
+      "domain": {"data": "data_0", "field": "y"},
+      "range": [{"signal": "height"}, 0],
+      "nice": true,
+      "zero": true
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": {"data": "data_0", "field": "c", "sort": true},
+      "range": "category"
+    }
+  ],
+  "axes": [
+    {
+      "scale": "x",
+      "orient": "bottom",
+      "grid": false,
+      "title": "x",
+      "labelFlush": true,
+      "labelOverlap": true,
+      "tickCount": {"signal": "ceil(width/40)"},
+      "zindex": 1
+    },
+    {
+      "scale": "x",
+      "orient": "bottom",
+      "grid": true,
+      "tickCount": {"signal": "ceil(width/40)"},
+      "gridScale": "y",
+      "domain": false,
+      "labels": false,
+      "maxExtent": 0,
+      "minExtent": 0,
+      "ticks": false,
+      "zindex": 0
+    },
+    {
+      "scale": "y",
+      "orient": "left",
+      "grid": false,
+      "title": "y",
+      "labelOverlap": true,
+      "tickCount": {"signal": "ceil(height/40)"},
+      "zindex": 1
+    },
+    {
+      "scale": "y",
+      "orient": "left",
+      "grid": true,
+      "tickCount": {"signal": "ceil(height/40)"},
+      "gridScale": "x",
+      "domain": false,
+      "labels": false,
+      "maxExtent": 0,
+      "minExtent": 0,
+      "ticks": false,
+      "zindex": 0
+    }
+  ],
+  "legends": [{"stroke": "color", "title": "c"}],
+  "config": {"axisY": {"minExtent": 30}}
 }
