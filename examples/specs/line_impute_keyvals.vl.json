@@ -1,41 +1,25 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
   "data": {
-    "values": [
-      {"x": 0, "y": 28, "c": 0},
-      {"x": 0, "y": 91, "c": 1},
-      {"x": 1, "y": 43, "c": 0},
-      {"x": 1, "y": 55, "c": 1},
-      {"x": 2, "y": 81, "c": 0},
-      {"x": 2, "y": 53, "c": 1},
-      {"x": 3, "y": 19, "c": 0}
-    ]
+    "values": [{"x": 0, "y": 28, "c": 0},
+               {"x": 0, "y": 91, "c": 1},
+               {"x": 1, "y": 43, "c": 0},
+               {"x": 1, "y": 55, "c": 1},
+               {"x": 2, "y": 81, "c": 0},
+               {"x": 2, "y": 53, "c": 1},
+               {"x": 3, "y": 19, "c": 0}]
   },
-  "transform": [
-    {
-      "impute": "y",
+  "transform": [{
+    "impute": "y",
       "key": "x",
       "value": 100,
       "groupby": ["c"],
       "keyvals": [4]
-    }
-  ],
+  }],
   "mark": "line",
   "encoding": {
-    "x": {
-      "field": "x",
-      "type": "quantitative",
-      "scale": {
-        "nice": 1
-      }
-    },
-    "y": {
-      "field": "y",
-      "type": "quantitative"
-    },
-    "color": {
-      "field": "c",
-      "type": "nominal"
-    }
+    "x": {"field": "x", "type": "quantitative", "scale": {"nice": 1}},
+    "y": {"field": "y", "type": "quantitative"},
+    "color": {"field": "c", "type": "nominal"}
   }
 }

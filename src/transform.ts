@@ -238,8 +238,12 @@ export interface ImputeTransform extends ImputeParams {
    */
   key: string;
   /**
-   * An optional array or `ImputeSequence` of key values that should be considered for imputation.
-   * If provided, this will be used in addition to the key values observed within the input data.
+   * Defines the key values that should be considered for imputation.
+   * One: an array of key values or an object defining a [number sequence](https://vega.github.io/vega-lite/docs/impute.html#sequence-def).
+   *
+   * If provided, this will be used in addition to the key values observed within the input data.  If not provided, the values will be derived from all unique values of the `key` field. For `impute` in `encoding`, the key field is `x` if `y` field is imputed, or vice versa.
+   *
+   * If there is no impute grouping, this property _must_ be specified.
    */
   keyvals?: any[] | ImputeSequence;
 
