@@ -99,7 +99,7 @@ In this example, we use array `keyvals`.
 
 {:#sequence-def}
 ### Impute Sequence Keyvals
-To define a sequence, an object with the following properties must be specified.
+To define a sequence for `keyvals` in `impute`, an object with the following properties must be specified.
 
 {% include table.html props="start,stop,step" source="ImputeSequence" %}
 <div class="vl-example" data-name="line_impute_keyvals_sequence"></div>
