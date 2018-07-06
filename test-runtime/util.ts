@@ -2,6 +2,7 @@
 import * as fs from 'fs';
 import {sync as mkdirp} from 'mkdirp';
 import {stringValue} from 'vega-util';
+import {Config} from '../src/config';
 import {SelectionResolution, SelectionType} from '../src/selection';
 import {NormalizedLayerSpec, NormalizedUnitSpec, TopLevelSpec} from '../src/spec';
 
@@ -136,22 +137,25 @@ function base(iter: number, sel: any, opts: any = {}): NormalizedUnitSpec | Norm
 export function spec(compose: ComposeType, iter: number, sel: any, opts: any = {}): TopLevelSpec {
   const {data, ...specification} = base(iter, sel, opts);
   const resolve = opts.resolve;
+  const config: Config = {mark: {tooltip: null}};
   switch (compose) {
     case 'unit':
-      return {data, ...specification};
+      return {data, ...specification, config};
     case 'facet':
       return {
         data,
         facet: {row: {field: 'c', type: 'nominal'}},
         spec: specification,
-        resolve
+        resolve,
+        config
       };
     case 'repeat':
       return {
         data,
         repeat: {row: ['d', 'e', 'f']},
         spec: specification,
-        resolve
+        resolve,
+        config
       };
   }
 
