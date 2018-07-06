@@ -49,6 +49,9 @@
       "encode": {
         "update": {
           "fill": {"value": "#4c78a8"},
+          "tooltip": {
+            "signal": "{\"bin_IMDB_Rating\": ''+datum[\"bin_IMDB_Rating\"], \"Number of Records\": format(datum[\"count_*\"], \"\")}"
+          },
           "x": {"scale": "x", "field": "bin_IMDB_Rating"},
           "width": {"scale": "x", "band": true},
           "y": {"scale": "y", "field": "count_*"},
