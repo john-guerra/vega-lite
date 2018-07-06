@@ -4,9 +4,10 @@ title: Impute
 permalink: /docs/impute.html
 ---
 
-To impute data in Vega-Lite, users can either use use an `impute` property of an [encoding field definition](#encoding) or an `impute` transform inside the [`transform`](#transform) array.
+To impute missing data in Vega-Lite, you can either use the `impute` transform either inside an [encoding field definition](#encoding) or inside an [`transform`](#transform) array.
 
-For imputing data tuples, a field from the existing data is used as `key`(inferred automatically in `encoding` `impute`) and the data is partitioned into subsets according to the values of `groupby`(inferred automatically in `encoding` `impute`). The data is first grouped using `groupby`, then the data tuples corresponding to the missing key values in each group are imputed.
+Impute transform in Vega-Lite groups data and determines missing values of the `key` field within each group.  For each missing value in each group, a new tuple will be generated
+with the `impute`d field generated based on specified imputation method (by using a constant `value` or by calculating statistics such as mean within each group).
 
 ## Documentation Overview
 {:.no_toc}
@@ -41,16 +42,14 @@ The `impute` property of [a field definition](encoding.html#field-def) can be us
 
 {% include table.html props="value,method,frame" source="ImputeParams" %}
 
-
-The inferred `key`, which is essentially the value used to identify that a data tuple is missing, is the `field` of the other [position encoding channel](encoding.html#position) i.e., `field` of `y` if `x` is being `imputed` or `field` of `x` if `y` is being imputed.
-Values are automatically grouped by the fields of [mark property channels](encoding.html#mark-prop), [key channel](encoding.html#key) and [detail channel](encoding.html#detail).
-Imputation will then be performed on a per-group basis, i.e., missing values will be imputed using the group mean rather than the global mean.
+For `impute` in encoding, grouping fields and the key field (for identifying missing values) are automatically determined. Values are automatically grouped by the specified fields of [mark property channels](encoding.html#mark-prop), [key channel](encoding.html#key) and [detail channel](encoding.html#detail). If x-field is `impute`d, y-field is the key field. Basically, any missing y-value in each group will lead to a new tuple imputed, and vice versa.
 
 In this example, the data object where `"x"` is `3` and `"c"` is `1` is missing. So we can impute the missing data and give the imputed field a value of `0`.
+
 <div class="vl-example" data-name="line_impute_value"></div>
 
 We can also use a `method` on existing data points to generate the missing data.
-Here, the `method` used is `mean`. The values are grouped by the `field` of the `color` encoding and the imputation is performed group by group.
+Here, we set  `method` = `mean`. The values are grouped by the `field` of the `color` encoding and the imputation is performed group by group.
 
 <div class="vl-example" data-name="line_impute_method"></div>
 
