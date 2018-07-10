@@ -160,7 +160,8 @@ export function nice(scaleType: ScaleType, channel: Channel, fieldDef: FieldDef<
   if (fieldDef.bin || util.contains([ScaleType.TIME, ScaleType.UTC], scaleType)) {
     return undefined;
   }
-  return util.contains([X, Y], channel); // return true for quantitative X/Y unless binned
+  // return true for quantitative X/Y unless binned or quantize scale
+  return util.contains([X, Y], channel) || scaleType === ScaleType.QUANTIZE;
 }
 
 export function padding(
